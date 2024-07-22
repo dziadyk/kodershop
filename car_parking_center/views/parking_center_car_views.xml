@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="parking_center_car_tree" model="ir.ui.view">
+        <field name="name">parking.center.car.tree</field>
+        <field name="model">parking.center.car</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="brand"/>
+                <field name="type"/>
+                <field name="vehicle_number"/>
+                <field name="partner_id"/>
+                <field name="parking_time"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="parking_center_car_action" model="ir.actions.act_window">
+        <field name="name">Car</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">parking.center.car</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="parking_center_car_main_menu"
+               action="parking_center_car_action"
+               parent="parking_center_main_menu"
+               name="Cars" sequence="200"/>
+    <menuitem id="parking_center_car_menu"
+               action="parking_center_car_action"
+               parent="parking_center_menu"
+               name="Cars" sequence="200"/>
+
+</odoo>

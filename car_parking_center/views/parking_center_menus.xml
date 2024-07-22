@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="parking_center_main_menu"
+              name="Parking Center"
+              web_icon="car_parking_center,static/description/icon.png"
+              sequence="100"/>
+
+    <menuitem id="parking_center_menu"
+              parent="parking_center_main_menu"
+              name="Parking Center" sequence="1000"/>
+
+</odoo>
