@@ -22,9 +22,9 @@ class Car(models.Model):
         string='Owner',
         ondelete='set null',
     )
-    parking_count = fields.Float(
+    visit_count = fields.Float(
         string='Times in parking center',
-        compute='_compute_parking_count',
+        compute='_compute_visit_count',
         store=False,
     )
     photo = fields.Image()
@@ -37,3 +37,7 @@ class Car(models.Model):
     def _compute_name(self):
         for record in self:
             record.name = (record.brand or '') + ' ' + (record.vehicle_number or '')
+
+    def _compute_visit_count(self):
+        for record in self:
+            record.visit_count = self.env['parking.center.visit'].search_count([('car_id', '=', record.id)])
