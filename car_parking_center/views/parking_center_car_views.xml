@@ -16,11 +16,48 @@
         </field>
     </record>
 
+    <record id="parking_center_car_form" model="ir.ui.view">
+        <field name="name">parking.center.car.form</field>
+        <field name="model">parking.center.car</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="photo" widget="image" class="oe_left oe_avatar"/>
+                    <div class="oe_title">
+                        <h3>
+                            <field name="name" readonly="True"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <field name="brand"/>
+                        <field name="vehicle_number"/>
+                        <field name="type"/>
+                        <field name="partner_id"/>
+                        <field name="parking_time"/>
+                    </group>
+                    <notebook>
+                        <page string="Visits History" name="visits_history">
+                            <field name="visit_ids">
+                                <tree default_order="date desc">
+                                    <field name="date"/>
+                                    <field name="state"/>
+                                    <field name="lot_number" string="Lot"/>
+                                    <field name="parking_time" string="Time"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <record id="parking_center_car_action" model="ir.actions.act_window">
         <field name="name">Car</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">parking.center.car</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">tree,form</field>
     </record>
 
     <menuitem id="parking_center_car_main_menu"

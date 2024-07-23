@@ -1,5 +1,5 @@
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 
 
 class Car(models.Model):
@@ -7,12 +7,23 @@ class Car(models.Model):
     _description = 'Car'
 
     name = fields.Char(
-        required=True, )
-    brand = fields.Char()
+        compute='_compute_name',
+        store=True)
+    brand = fields.Char(
+        required=True)
+    vehicle_number = fields.Char(
+        required=True)
     type = fields.Char()
-    vehicle_number = fields.Char()
     partner_id = fields.Many2one(
         comodel_name='res.partner',
         string='Owner', ondelete='set null')
     parking_time = fields.Float()
     photo = fields.Image()
+    visit_ids = fields.One2many(
+        comodel_name='parking.center.visit',
+        inverse_name='car_id')
+
+    @api.depends('brand', 'vehicle_number')
+    def _compute_name(self):
+        for record in self:
+            record.name = (record.brand or '') + ' ' + (record.vehicle_number or '')
