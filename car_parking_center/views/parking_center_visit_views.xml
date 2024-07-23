@@ -24,12 +24,12 @@
     </record>
 
     <menuitem id="parking_center_visit_main_menu"
-               action="parking_center_visit_action"
-               parent="parking_center_main_menu"
-               name="Parking Visits" sequence="100"/>
+        action="parking_center_visit_action"
+        parent="parking_center_main_menu"
+        name="Parking Visits" sequence="2"/>
     <menuitem id="parking_center_visit_menu"
-               action="parking_center_visit_action"
-               parent="parking_center_menu"
-               name="Parking Visits" sequence="100"/>
+        action="parking_center_visit_action"
+        parent="parking_center_menu"
+        name="Parking Visits" sequence="2"/>
 
 </odoo>

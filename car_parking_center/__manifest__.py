@@ -16,6 +16,7 @@
         'views/parking_center_menus.xml',
         'views/parking_center_car_views.xml',
         'views/parking_center_visit_views.xml',
+        'views/parking_center_payment_views.xml',
     ],
     'images': ['static/description/icon.png'],
     'application': False,

@@ -6,6 +6,10 @@ class Payment(models.Model):
     _name = 'parking.center.payment'
     _description = 'Payment'
 
+    name = fields.Char(
+        required=True, )
+    date = fields.Datetime(
+        required=True, )
     type = fields.Selection(
         selection=[('card', _('Card')),
                    ('cash', _('Cash'))],
