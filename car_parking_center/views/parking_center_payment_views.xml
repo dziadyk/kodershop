@@ -5,7 +5,7 @@
         <field name="name">parking.center.payment.tree</field>
         <field name="model">parking.center.payment</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree create="False" edit="False">
                 <field name="date"/>
                 <field name="amount"/>
                 <field name="type"/>

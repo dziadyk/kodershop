@@ -1,6 +1,5 @@
 
-from odoo import _, fields, models
-from datetime import datetime
+from odoo import _, api, fields, models
 
 
 class Visit(models.Model):
@@ -11,7 +10,8 @@ class Visit(models.Model):
         default=True,
     )
     name = fields.Char(
-        required=True,
+        compute='_compute_name',
+        store=True,
     )
     date = fields.Datetime(
         default=lambda self: fields.Datetime.now(),
@@ -28,9 +28,10 @@ class Visit(models.Model):
         required=True,
     )
     car_id = fields.Many2one(
-        comodel_name='parking.center.car',
         string='Car',
+        comodel_name='parking.center.car',
         ondelete='restrict',
+        required=True,
     )
     partner_id = fields.Many2one(
         string='Car Owner',
@@ -48,3 +49,14 @@ class Visit(models.Model):
     payment_ids = fields.One2many(
         comodel_name='parking.center.payment',
         inverse_name='visit_id')
+
+    @api.depends('date', 'lot_number', 'car_id')
+    def _compute_name(self):
+        for record in self:
+            record.name = ''
+            if record.lot_number:
+                record.name += '{}'.format(record.lot_number) + ' '
+            if record.car_id:
+                record.name += record.car_id.name + ' '
+            if record.date:
+                record.name += record.date.strftime("%m/%d/%Y %H:%M:%S")
