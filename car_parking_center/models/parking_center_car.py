@@ -8,20 +8,30 @@ class Car(models.Model):
 
     name = fields.Char(
         compute='_compute_name',
-        store=True)
+        store=True,
+    )
     brand = fields.Char(
-        required=True)
+        required=True,
+    )
     vehicle_number = fields.Char(
-        required=True)
+        required=True,
+    )
     type = fields.Char()
     partner_id = fields.Many2one(
         comodel_name='res.partner',
-        string='Owner', ondelete='set null')
-    parking_time = fields.Float()
+        string='Owner',
+        ondelete='set null',
+    )
+    parking_count = fields.Float(
+        string='Times in parking center',
+        compute='_compute_parking_count',
+        store=False,
+    )
     photo = fields.Image()
     visit_ids = fields.One2many(
         comodel_name='parking.center.visit',
-        inverse_name='car_id')
+        inverse_name='car_id',
+    )
 
     @api.depends('brand', 'vehicle_number')
     def _compute_name(self):
