@@ -84,7 +84,7 @@ class Visit(models.Model):
         for record in self:
             if record.state == 'left' and not record.paid:
                 raise exceptions.UserError(
-                    _("The car can't leave parking center. Payment amount doesn't equal visit amount"))
+                    _("The car can't leave parking center. Payments amount doesn't equal visit amount"))
 
     @api.depends('date', 'lot_number', 'car_id')
     def _compute_name(self):
