@@ -6,9 +6,6 @@ class Payment(models.Model):
     _name = 'parking.center.payment'
     _description = 'Payment'
 
-    active = fields.Boolean(
-        default=True,
-    )
     name = fields.Char(
         compute='_compute_name',
         store=True,

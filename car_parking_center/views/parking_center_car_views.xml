@@ -7,9 +7,14 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="brand"/>
+                <field name="model"/>
                 <field name="vehicle_number"/>
-                <field name="type"/>
                 <field name="partner_id"/>
+                <field name="state" widget="badge"
+                       decoration-muted="state == 'new'"
+                       decoration-success="state == 'left'"
+                       decoration-warning="state == 'parked'"
+                       decoration-info="state == 'reserved'"/>
                 <field name="visit_count" string="Visits"/>
             </tree>
         </field>
@@ -29,19 +34,23 @@
                     </div>
                     <group>
                         <field name="brand"/>
+                        <field name="model"/>
                         <field name="vehicle_number"/>
-                        <field name="type"/>
                         <field name="partner_id"/>
                     </group>
                     <notebook>
-                        <page string="Visits History" name="visits_history">
+                        <page name="visits_history" string="Visits History" invisible="id==False">
                             <field name="visit_ids">
                                 <tree default_order="date desc">
                                     <field name="date"/>
-                                    <field name="state"/>
                                     <field name="lot_number" string="Lot"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'left'"
+                                           decoration-warning="state == 'parked'"
+                                           decoration-info="state == 'reserved'"/>
                                     <field name="parking_time" string="Time"/>
                                     <field name="amount"/>
+                                    <field name="paid"/>
                                 </tree>
                             </field>
                         </page>
@@ -61,10 +70,10 @@
     <menuitem id="parking_center_car_main_menu"
         action="parking_center_car_action"
         parent="parking_center_main_menu"
-        name="Cars" sequence="1"/>
+        name="Cars" sequence="2"/>
     <menuitem id="parking_center_car_menu"
         action="parking_center_car_action"
         parent="parking_center_menu"
-        name="Cars" sequence="1"/>
+        name="Cars" sequence="2"/>
 
 </odoo>

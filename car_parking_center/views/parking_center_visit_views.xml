@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="parking_center_visit_search" model="ir.ui.view">
+        <field name="name">parking.center.visit.search</field>
+        <field name="model">parking.center.visit</field>
+        <field name="arch" type="xml">
+           <search>
+               <field name="car_id" string="Car"/>
+               <field name="partner_id" string="Owner"/>
+               <filter name="groupby_state" string="State" context="{'group_by': 'state'}"/>
+               <searchpanel>
+                   <field name="state" select="multi" enable_counters="1"/>
+               </searchpanel>
+           </search>
+        </field>
+    </record>
+
     <record id="parking_center_visit_tree" model="ir.ui.view">
         <field name="name">parking.center.visit.tree</field>
         <field name="model">parking.center.visit</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name"/>
                 <field name="date"/>
                 <field name="lot_number" string="Lot"/>
-                <field name="state"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'left'"
+                       decoration-warning="state == 'parked'"
+                       decoration-info="state == 'reserved'"/>
+                <field name="paid"/>
+                <field name="amount"/>
                 <field name="car_id"/>
                 <field name="partner_id"/>
-                <field name="parking_time"/>
-                <field name="amount"/>
+                <field name="parking_time" widget="float_time"/>
             </tree>
         </field>
     </record>
@@ -24,6 +42,8 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <widget name="web_ribbon" title="Paid" invisible="paid==False"/>
+                    <widget name="web_ribbon" title="Not Paid" bg_color="text-bg-danger" invisible="paid==True"/>
                     <div class="oe_title">
                         <h3>
                             <field name="name" readonly="True"/>
@@ -37,9 +57,10 @@
                         <field name="partner_id"/>
                         <field name="parking_time" widget="float_time"/>
                         <field name="amount"/>
+                        <field name="paid" invisible="True"/>
                     </group>
                     <notebook>
-                        <page string="Payments" name="payments">
+                        <page name="payments" string="Payments" invisible="id==False">
                             <field name="payment_ids">
                                 <tree default_order="date desc">
                                     <field name="date"/>
@@ -55,7 +76,7 @@
     </record>
 
     <record id="parking_center_visit_action" model="ir.actions.act_window">
-        <field name="name">Visit</field>
+        <field name="name">Parking Visit</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">parking.center.visit</field>
         <field name="view_mode">tree,form</field>
@@ -64,10 +85,10 @@
     <menuitem id="parking_center_visit_main_menu"
         action="parking_center_visit_action"
         parent="parking_center_main_menu"
-        name="Parking Visits" sequence="2"/>
+        name="Parking Visits" sequence="1"/>
     <menuitem id="parking_center_visit_menu"
         action="parking_center_visit_action"
         parent="parking_center_menu"
-        name="Parking Visits" sequence="2"/>
+        name="Parking Visits" sequence="1"/>
 
 </odoo>

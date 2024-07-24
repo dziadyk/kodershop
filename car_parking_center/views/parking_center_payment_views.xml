@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="parking_center_payment_search" model="ir.ui.view">
+        <field name="name">parking.center.payment.search</field>
+        <field name="model">parking.center.payment</field>
+        <field name="arch" type="xml">
+           <search>
+               <field name="car_id" string="Car"/>
+               <field name="partner_id" string="Owner"/>
+               <filter name="groupby_type" string="Type" context="{'group_by': 'type'}"/>
+               <searchpanel>
+                   <field name="type" select="one" enable_counters="1"/>
+               </searchpanel>
+           </search>
+        </field>
+    </record>
+
     <record id="parking_center_payment_tree" model="ir.ui.view">
         <field name="name">parking.center.payment.tree</field>
         <field name="model">parking.center.payment</field>
@@ -9,8 +24,23 @@
                 <field name="date"/>
                 <field name="amount"/>
                 <field name="type"/>
-                <field name="visit_id"/>
+                <field name="car_id" string="Car"/>
+                <field name="partner_id" string="Owner"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="parking_center_payment_pivot" model="ir.ui.view">
+        <field name="name">parking.center.payment.pivot</field>
+        <field name="model">parking.center.payment</field>
+        <field name="arch" type="xml">
+            <pivot display_quantity="1">
+                <field name="date" interval="year" type="row"/>
+                <field name="date" interval="month" type="row"/>
+                <field name="date" interval="day" type="row"/>
+                <field name="type" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
         </field>
     </record>
 
@@ -40,7 +70,7 @@
         <field name="name">Payment</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">parking.center.payment</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,pivot,form</field>
     </record>
 
     <menuitem id="parking_center_payment_main_menu"
