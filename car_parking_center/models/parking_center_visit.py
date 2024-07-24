@@ -70,7 +70,7 @@ class Visit(models.Model):
                                                                   ('car_id', '=', record.car_id.id),
                                                                   ('id', '!=', record.id)]):
                     raise exceptions.UserError(
-                        _("{} is parked now. You can't create one more visit").format(record.car_id.name))
+                        _("{} is parked now. You cannot create one more visit").format(record.car_id.name))
 
     @api.constrains('amount')
     def constrains_amount(self):

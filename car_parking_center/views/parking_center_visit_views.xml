@@ -51,10 +51,10 @@
                     </div>
                     <group>
                         <field name="date"/>
-                        <field name="lot_number"/>
-                        <field name="state"/>
                         <field name="car_id"/>
                         <field name="partner_id"/>
+                        <field name="state" widget="selection_badge"/>
+                        <field name="lot_number"/>
                         <field name="parking_time" widget="float_time"/>
                         <field name="amount"/>
                         <field name="paid" invisible="True"/>

@@ -1,5 +1,4 @@
-
-from odoo import _, api, fields, models
+from odoo import _, api, exceptions, fields, models
 
 
 class Payment(models.Model):
@@ -42,6 +41,14 @@ class Payment(models.Model):
         store=True,
         readonly=True,
     )
+    state = fields.Selection(
+        selection=[('reserved', _('Reserved')),
+                   ('parked', _('Parked')),
+                   ('left', _('Left'))],
+        related='visit_id.state',
+        store=False,
+        readonly=True,
+    )
 
     @api.depends('date', 'type', 'amount')
     def _compute_name(self):
@@ -53,3 +60,24 @@ class Payment(models.Model):
                 record.name += record.type.capitalize() + ' '
             if record.date:
                 record.name += record.date.strftime("%m/%d/%Y %H:%M:%S")
+
+    @api.constrains('amount', 'visit_id')
+    def constrains_amount(self):
+        for record in self:
+            total_amount = 0
+            for payment in self.env['parking.center.payment'].search([('visit_id', '=', record.visit_id.id)]):
+                total_amount += payment.amount
+            if total_amount > record.visit_id.amount:
+                raise exceptions.UserError(
+                    _("Total amount of payments ({:.2f}) should not exceed the parking visit amount ({:.2f})")
+                    .format(total_amount, record.visit_id.amount))
+            if total_amount < record.visit_id.amount and record.visit_id.state == 'left':
+                raise exceptions.UserError(
+                    _("Car has left the parking. You cannot reduce the payment amount"))
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_only_if_not_left(self):
+        for record in self:
+            if record.visit_id.state == 'left':
+                raise exceptions.UserError(
+                    _("Car has left the parking. You cannot remove/deactivate the payment"))

@@ -26,6 +26,10 @@
                 <field name="type"/>
                 <field name="car_id" string="Car"/>
                 <field name="partner_id" string="Owner"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'left'"
+                       decoration-warning="state == 'parked'"
+                       decoration-info="state == 'reserved'"/>
             </tree>
         </field>
     </record>
@@ -50,6 +54,9 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <widget name="web_ribbon" title="Left" invisible="state!='left'"/>
+                    <widget name="web_ribbon" title="Parked" bg_color="text-bg-warning" invisible="state!='parked'"/>
+                    <widget name="web_ribbon" title="Reserved" bg_color="text-bg-info" invisible="state!='reserved'"/>
                     <div class="oe_title">
                         <h3>
                             <field name="name" readonly="True"/>
@@ -60,6 +67,7 @@
                         <field name="date"/>
                         <field name="type" widget="radio" options="{'horizontal': true}"/>
                         <field name="amount"/>
+                        <field name="state" invisible="True"/>
                     </group>
                 </sheet>
             </form>
