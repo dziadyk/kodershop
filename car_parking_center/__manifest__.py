@@ -10,6 +10,8 @@
     'website': 'https://www.oneservice-consulting.com',
     'depends': [
         'base',
+        'web',
+        'board',
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -17,9 +19,16 @@
         'views/parking_center_car_views.xml',
         'views/parking_center_visit_views.xml',
         'views/parking_center_payment_views.xml',
+        'views/parking_center_dashboard.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'static/src/components/parking_center_dashboard.js',
+            'static/src/components/parking_center_dashboard.xml',
+        ]
+    },
     'images': ['static/description/icon.png'],
-    'application': False,
+    'application': True,
     'installable': True,
     'auto_install': False,
 }
