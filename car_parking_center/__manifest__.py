@@ -23,8 +23,8 @@
     ],
     'assets': {
         'web.assets_backend': [
-            'static/src/components/parking_center_dashboard.js',
-            'static/src/components/parking_center_dashboard.xml',
+            'car_parking_center/static/src/components/parking_center_dashboard.js',
+            'car_parking_center/static/src/components/parking_center_dashboard.xml',
         ]
     },
     'images': ['static/description/icon.png'],
