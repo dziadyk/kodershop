@@ -3,30 +3,36 @@
     <t t-name="car_parking_center.ParkingCenterDashboard" owl="1">
         <div class="vh-100 overflow-auto db-muted">
             <div class="row m-3">
-                <div class="col-lg-7">
+                <div class="col-lg-5">
                     <div class="row">
                         <div class="col m-0 p-0">
                             <div class="shadow-sm border m-2 p-4 bg-white">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <h1 class="text-primary fw-bold">Car Parking Center Dashboard</h1>
-                                    <div>
-                                        <select class="form-select">
-                                            <option value="0">Select Period</option>
-                                            <option value="7">Last 7 Days</option>
-                                            <option value="30">Last 30 Days</option>
-                                            <option value="90">Last 90 Days</option>
-                                            <option value="365">Last 365 Days</option>
-                                        </select>
-                                    </div>
+                                    <h1 class="text-primary fw-bold">Car Parking Center Statistic</h1>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <KpiCard/>
+                        <KpiCard name="'Cars at parking'"
+                                 bstyle="'border-warning border-3'"
+                                 value="state.quotations.parked_lot"/>
+                        <KpiCard name="'Free lots'"
+                                 bstyle="'border-success border-3'"
+                                 value="state.quotations.free_lot"/>
+                        <KpiCard name="'Reserved lots'"
+                                 bstyle="'border-info border-3'"
+                                 value="state.quotations.reserved_lot"/>
+                    </div>
+                    <div class="row">
+                        <KpiCard name="'Total Quantity of Visits'"
+                                 bstyle="'border-white border-1'"
+                                 value="state.quotations.total_visit"/>
+                        <KpiCard name="'Total Amount of Payments'"
+                                 bstyle="'border-white border-1'"
+                                 value="state.quotations.total_payment"/>
                     </div>
                 </div>
-                <div class="col-lg-5"></div>
             </div>
         </div>
     </t>
